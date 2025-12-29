@@ -65,31 +65,31 @@ function App() {
         )}
 
         {currentPage === 'products' && (
-          <div className="pt-20 min-h-screen">
+          <div className="min-h-screen">
              <ProductsPage />
           </div>
         )}
 
         {currentPage === 'blog' && (
-          <div className="pt-24 min-h-screen">
+          <div className="min-h-screen">
              <BlogSection viewMode="full" />
           </div>
         )}
 
         {currentPage === 'ai-chef' && (
-          <div className="pt-20 min-h-screen">
+          <div className="min-h-screen">
              <AiChef viewMode="full" />
           </div>
         )}
 
         {currentPage === 'contact' && (
-          <div className="pt-20 min-h-screen">
+          <div className="min-h-screen">
              <ContactPage />
           </div>
         )}
 
         {currentPage === 'about' && (
-          <div className="pt-20 min-h-screen">
+          <div className="min-h-screen">
              <AboutPage />
           </div>
         )}

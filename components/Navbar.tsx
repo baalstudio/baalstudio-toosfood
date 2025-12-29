@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Phone, ShoppingBag } from 'lucide-react';
+import { Menu, X, Phone } from 'lucide-react';
 import { Logo } from './Logo';
 
 interface NavbarProps {
@@ -79,12 +79,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentPage }) => {
           {/* CTA Button */}
           <div className="hidden md:flex items-center gap-4">
             <button 
-               onClick={() => handleNavClick('products', 'products')}
-               className={`${isNavbarOpaque ? 'text-gray-600 hover:text-toos-green' : 'text-white hover:text-toos-gold'} p-2 transition-colors relative`}
-            >
-                <ShoppingBag size={24} />
-            </button>
-            <button 
               onClick={() => handleNavClick('contact')}
               className={`flex items-center gap-2 px-6 py-2.5 rounded-full font-black transition-all shadow-xl hover:scale-105 ${
                 isNavbarOpaque 
@@ -98,10 +92,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentPage }) => {
           </div>
 
           {/* Mobile menu button */}
-          <div className="md:hidden flex items-center gap-4">
-            <button onClick={() => handleNavClick('products', 'products')} className={isNavbarOpaque ? 'text-gray-600' : 'text-white'}>
-              <ShoppingBag size={24} />
-            </button>
+          <div className="md:hidden flex items-center gap-2">
             <button
               onClick={() => setIsOpen(!isOpen)}
               className={`${isNavbarOpaque ? 'text-gray-600' : 'text-white'} p-2 focus:outline-none`}

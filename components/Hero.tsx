@@ -20,7 +20,7 @@ export const Hero: React.FC = () => {
       <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-toos-gold/10 rounded-full blur-[150px] animate-pulse delay-1000"></div>
 
       {/* Content Area */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center flex flex-col items-center">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center flex flex-col items-center pt-32 pb-16">
         
         {/* Top Tagline */}
         <div className="flex items-center gap-3 bg-white/10 backdrop-blur-md border border-white/20 px-6 py-2 rounded-full mb-10 animate-in fade-in slide-in-from-top-8 duration-700">

@@ -46,7 +46,7 @@ export const AboutPage: React.FC = () => {
   return (
     <div className="bg-white overflow-hidden">
       {/* Hero Section */}
-      <section className="relative py-24 bg-toos-dark text-white">
+      <section className="relative pt-32 pb-24 bg-toos-dark text-white">
         <div className="absolute inset-0 opacity-20">
           <img 
             src="https://images.unsplash.com/photo-1504384308090-c54be3855833?q=80&w=2070&auto=format&fit=crop" 

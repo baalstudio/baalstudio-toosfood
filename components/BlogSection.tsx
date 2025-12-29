@@ -11,7 +11,7 @@ const blogPostsData: BlogPost[] = [
     id: 1,
     title: 'رازهای پخت فلافل ترد و بازاری در خانه',
     excerpt: 'در این مقاله یاد می‌گیرید چطور با استفاده از نخود کرمانشاهی توس فود، فلافلی درست کنید که بیرون آن ترد و درون آن کاملا پوک باشد.',
-    image: 'https://images.unsplash.com/photo-1593001874117-c99c6efec8bd?q=80&w=800&auto=format&fit=crop',
+    image: '/img/blog-1.jpg',
     date: '۲۰ آبان ۱۴۰۳',
     readTime: '۱۰ دقیقه',
     category: 'آموزش آشپزی',
@@ -62,7 +62,7 @@ const blogPostsData: BlogPost[] = [
     id: 2,
     title: 'فوت و فن لعاب انداختن قورمه سبزی',
     excerpt: 'آیا قورمه سبزی شما آب و دانه جدا می‌شود؟ با انتخاب لوبیا قرمز مناسب و تکنیک‌های پخت آرام، به خورشتی جاافتاده برسید.',
-    image: 'https://images.unsplash.com/photo-1598511726623-d219904a0f18?q=80&w=800&auto=format&fit=crop',
+    image: '/img/blog-2.jpg',
     date: '۱۵ آبان ۱۴۰۳',
     readTime: '۱۲ دقیقه',
     category: 'نکات طلایی',
@@ -106,7 +106,7 @@ const blogPostsData: BlogPost[] = [
     id: 3,
     title: 'طرز تهیه عدس پلو مجلسی با گوشت قلقلی',
     excerpt: 'دستور پخت قدم به قدم عدس پلو با عدس سبز کانادایی. چگونه عدس‌ها له نشوند و برنجی دانه دانه داشته باشیم؟',
-    image: 'https://images.unsplash.com/photo-1628268909376-e8c44bb3153f?q=80&w=800&auto=format&fit=crop',
+    image: '/img/blog-3.jpg',
     date: '۰۸ آبان ۱۴۰۳',
     readTime: '۱۵ دقیقه',
     category: 'غذاهای سنتی',
@@ -137,7 +137,7 @@ const blogPostsData: BlogPost[] = [
     id: 4,
     title: 'خواص شگفت‌انگیز لوبیا چیتی برای سلامتی',
     excerpt: 'لوبیا چیتی منبع غنی پروتئین و فیبر است. در این مقاله به بررسی تاثیرات آن بر کاهش کلسترول و سلامت قلب می‌پردازیم.',
-    image: 'https://images.unsplash.com/photo-1550989460-0adf9ea622e2?q=80&w=800&auto=format&fit=crop',
+    image: '/img/blog-4.jpg',
     date: '۰۵ آبان ۱۴۰۳',
     readTime: '۸ دقیقه',
     category: 'سلامت و تغذیه',
@@ -159,7 +159,7 @@ const blogPostsData: BlogPost[] = [
     id: 5,
     title: 'استانداردهای نوین بسته‌بندی در توس فود',
     excerpt: 'چرا بسته‌بندی‌های ما تا ۶ ماه تازگی محصول را حفظ می‌کنند؟ آشنایی با تکنولوژی مپ (MAP) در خط تولید.',
-    image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=800&auto=format&fit=crop',
+    image: '/img/product-1.png',
     date: '۰۱ آبان ۱۴۰۳',
     readTime: '۵ دقیقه',
     category: 'اخبار کارخانه',
@@ -170,7 +170,7 @@ const blogPostsData: BlogPost[] = [
     id: 6,
     title: 'آموزش پخت آش شله قلمکار اصیل',
     excerpt: 'آش شله قلمکار به دلیل داشتن انواع حبوبات و گوشت، یکی از مقوی‌ترین غذاهای سنتی است که پخت آن صبر و حوصله می‌طلبد.',
-    image: 'https://images.unsplash.com/photo-1547592166-23ac45744acd?q=80&w=800&auto=format&fit=crop',
+    image: '/img/blog-6.jpg',
     date: '۲۸ مهر ۱۴۰۳',
     readTime: '۲۰ دقیقه',
     category: 'غذاهای سنتی',
@@ -215,7 +215,7 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ viewMode = 'preview', 
     return (
       <div className="bg-white min-h-screen">
         {/* Full Page Header */}
-        <div className="bg-gray-50 border-b border-gray-100 py-16">
+        <div className="bg-gray-50 border-b border-gray-100 pt-32 pb-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
              <nav className="flex items-center gap-2 text-sm text-gray-500 mb-6">
                 <span className="hover:text-toos-green cursor-pointer">خانه</span>

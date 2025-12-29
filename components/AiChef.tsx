@@ -40,7 +40,7 @@ export const AiChef: React.FC<AiChefProps> = ({ viewMode = 'preview', onFullView
     return (
       <div className="bg-white min-h-screen scroll-mt-24">
         {/* Full Page Header */}
-        <div className="bg-toos-dark py-24 relative overflow-hidden">
+        <div className="bg-toos-dark pt-32 pb-24 relative overflow-hidden">
           <div className="absolute inset-0 opacity-10 pattern-dots"></div>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <nav className="flex items-center gap-2 text-sm text-green-200 mb-8 opacity-80">

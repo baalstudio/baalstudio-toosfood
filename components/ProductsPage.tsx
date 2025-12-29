@@ -1,32 +1,47 @@
 import React, { useState, useMemo } from 'react';
 import { Product } from '../types';
 import { 
-  Search, Filter, X, ChevronRight, SlidersHorizontal, 
+  Search, X, ChevronRight, SlidersHorizontal, 
   ArrowUpDown, LayoutGrid, List, Star, Heart, 
-  ShoppingCart, CheckCircle2, AlertCircle, Trash2 
+  CheckCircle2, AlertCircle, Trash2, ArrowLeft 
 } from 'lucide-react';
 
 const allProducts: Product[] = [
-  { id: 1, title: 'نخود کرمانشاه', category: 'حبوبات', image: 'https://images.unsplash.com/photo-1584270354949-c26b0d5b4a0c?q=80&w=800&auto=format&fit=crop', description: 'نخود درجه یک، درشت و زودپز، پاک شده با دستگاه‌های لیزری پیشرفته.', price: 85000, rating: 4.8, isAvailable: true, isNew: true },
-  { id: 2, title: 'عدس سبز کانادایی', category: 'حبوبات', image: 'https://images.unsplash.com/photo-1599320878393-242d5442566c?q=80&w=800&auto=format&fit=crop', description: 'عدس ریز و خوش‌پخت، سرشار از آهن، مناسب برای انواع سوپ و خوراک سنتی.', price: 92000, rating: 4.5, isAvailable: true },
-  { id: 3, title: 'لوبیا قرمز جگری', category: 'حبوبات', image: 'https://images.unsplash.com/photo-1551462147-ff29053bfc14?q=80&w=800&auto=format&fit=crop', description: 'لوبیا قرمز مجلسی، یکدست و بدون شکستگی، مناسب برای قورمه سبزی اصیل.', price: 110000, rating: 4.9, isAvailable: true },
-  { id: 4, title: 'لپه آذرشهر', category: 'حبوبات', image: 'https://images.unsplash.com/photo-1515543904379-3d757afe9c6c?q=80&w=800&auto=format&fit=crop', description: 'لپه ریز زرد طلایی، خوش عطر و طعم، با زمان پخت استاندارد برای خورش قیمه.', price: 88000, rating: 4.7, isAvailable: false },
-  { id: 5, title: 'لوبیا چیتی تازه', category: 'حبوبات', image: 'https://images.unsplash.com/photo-1567306226416-28f0efdc88ce?q=80&w=800&auto=format&fit=crop', description: 'لوبیا چیتی با کیفیت صادراتی، بافت نرم و لعاب‌دار پس از پخت.', price: 125000, rating: 4.6, isAvailable: true },
-  { id: 6, title: 'سویا دانه ریز', category: 'غلات', image: 'https://images.unsplash.com/photo-1543257580-7269da773bf5?q=80&w=800&auto=format&fit=crop', description: 'پروتئین گیاهی سویا، بدون بو، غنی شده و مناسب برای جایگزینی گوشت.', price: 45000, rating: 4.2, isAvailable: true },
-  { id: 7, title: 'گردو مغز سفید اعلا', category: 'خشکبار', image: 'https://images.unsplash.com/photo-1518391846015-55a9cc003b25?q=80&w=800&auto=format&fit=crop', description: 'مغز گردوی درجه یک تویسرکان، چرب و تازه، بدون هیچ‌گونه تلخی.', price: 480000, rating: 5.0, isAvailable: true, isNew: true },
-  { id: 8, title: 'پسته اکبری زعفرانی', category: 'خشکبار', image: 'https://images.unsplash.com/photo-1527324688151-0e627063f2b1?q=80&w=800&auto=format&fit=crop', description: 'پسته اکبری دستچین، خندان و درشت، برشته شده با نمک و زعفران درجه یک.', price: 750000, rating: 4.9, isAvailable: true },
-  { id: 9, title: 'ماش پاک شده', category: 'حبوبات', image: 'https://images.unsplash.com/photo-1547592166-23ac45744acd?q=80&w=800&auto=format&fit=crop', description: 'ماش سبز ریز، پاک شده و آماده طبخ، مناسب برای انواع رژیم‌های سلامت.', price: 78000, rating: 4.4, isAvailable: true },
-  { id: 10, title: 'لوبیا سفید', category: 'حبوبات', image: 'https://images.unsplash.com/photo-1550989460-0adf9ea622e2?q=80&w=800&auto=format&fit=crop', description: 'لوبیا سفید خمین، یکدست و خوش‌پخت، عالی برای آبگوشت و خوراک لوبیا.', price: 95000, rating: 4.3, isAvailable: true },
-  { id: 11, title: 'کشمش پلویی آفتابی', category: 'خشکبار', image: 'https://images.unsplash.com/photo-1599599810694-b5b37304c041?q=80&w=800&auto=format&fit=crop', description: 'کشمش طبیعی، خشک شده زیر آفتاب، بدون مواد افزودنی و تیزاب.', price: 160000, rating: 4.7, isAvailable: true },
-  { id: 12, title: 'بادام درختی شور', category: 'خشکبار', image: 'https://images.unsplash.com/photo-1508029091899-59990f49ee94?q=80&w=800&auto=format&fit=crop', description: 'مغز بادام درختی ایرانی، ترد و خوش‌طعم، مناسب برای پذیرایی.', price: 420000, rating: 4.8, isAvailable: false },
+  { id: 1, title: 'آرد برنج توس', category: 'ادویه و خشکبار', image: '/img/product-1.png', description: 'آرد برنج با کیفیت عالی، تهیه شده از بهترین برنج‌های ایرانی، مناسب برای انواع دسر و شیرینی.', price: 45000, rating: 4.8, isAvailable: true, isNew: true },
+  { id: 2, title: 'زیره سیاه توس', category: 'ادویه و خشکبار', image: '/img/product-2.png', description: 'زیره سیاه اعلا، با عطر و طعم فوق‌العاده، پاک شده و آماده مصرف.', price: 120000, rating: 4.9, isAvailable: true },
+  { id: 3, title: 'زرشک توس', category: 'ادویه و خشکبار', image: '/img/product-3.png', description: 'زرشک درجه یک، با رنگی شفاف و طعمی عالی، دستچین شده برای سفره‌های شما.', price: 180000, rating: 4.7, isAvailable: true },
+  { id: 4, title: 'زنجبیل توس', category: 'ادویه و خشکبار', image: '/img/product-4.png', description: 'پودر زنجبیل خالص، با تندی و عطر طبیعی، مناسب برای انواع دمنوش و غذا.', price: 65000, rating: 4.6, isAvailable: true },
+  { id: 5, title: 'سماق توس', category: 'ادویه و خشکبار', image: '/img/product-5.png', description: 'پودر سماق قرمز درجه یک، با ترشی طبیعی، مناسب برای انواع کباب و غذاهای ایرانی.', price: 55000, rating: 4.5, isAvailable: true },
+  { id: 6, title: 'خلال پسته توس', category: 'ادویه و خشکبار', image: '/img/product-6.png', description: 'خلال پسته سبز و درجه یک، با کیفیت صادراتی، مناسب برای تزیین انواع غذا و دسر.', price: 350000, rating: 5.0, isAvailable: true },
+  { id: 7, title: 'خاکشیر توس', category: 'ادویه و خشکبار', image: '/img/product-7.png', description: 'خاکشیر شسته شده و تمیز، بدون خاکه، مناسب برای تهیه انواع شربت‌های سنتی.', price: 85000, rating: 4.8, isAvailable: true },
+  { id: 8, title: 'کشمش پلویی توس', category: 'ادویه و خشکبار', image: '/img/product-8.png', description: 'کشمش پلویی آفتابی، پاک شده و بدون دم، با شیرینی طبیعی و ماندگاری بالا.', price: 140000, rating: 4.7, isAvailable: true },
+  { id: 9, title: 'پودر سوخاری توس', category: 'پودر سوخاری', image: '/img/product-9.png', description: 'پودر سوخاری با دانه‌بندی استاندارد، برای ترد شدن انواع شنیسل و مرغ سوخاری.', price: 42000, rating: 4.4, isAvailable: true },
+  { id: 10, title: 'پودر کتلت توس', category: 'پودر سوخاری', image: '/img/product-10.png', description: 'ترکیب کامل آرد و ادویه‌جات مخصوص برای تهیه یک کتلت ترد و خوشمزه.', price: 38000, rating: 4.6, isAvailable: true },
+  { id: 11, title: 'پودر سوخاری اسپایسی توس', category: 'پودر سوخاری', image: '/img/product-11.png', description: 'پودر سوخاری با طعم تند و فلفلی، مناسب برای علاقه‌مندان به غذاهای اسپایسی.', price: 45000, rating: 4.7, isAvailable: true },
+  { id: 12, title: 'آرد سوخاری توس', category: 'پودر سوخاری', image: '/img/product-12.png', description: 'آرد سوخاری با کیفیت عالی، مناسب برای پوشش‌دهی انواع غذاهای سرخ‌کردنی.', price: 35000, rating: 4.3, isAvailable: true },
+  { id: 13, title: 'لیمو عمانی ده کیلویی توس', category: 'حبوبات', image: '/img/product-13.png', description: 'لیمو عمانی درجه یک در بسته‌بندی اقتصادی ده کیلویی، مناسب برای رستوران‌ها و مراکز تهیه غذا.', price: 950000, rating: 4.8, isAvailable: true },
+  { id: 14, title: 'سویا ده کیلویی توس', category: 'حبوبات', image: '/img/product-14.png', description: 'پروتئین سویا با کیفیت عالی در بسته‌بندی ده کیلویی، پاک شده و یکدست.', price: 380000, rating: 4.5, isAvailable: true },
+  { id: 15, title: 'جوپرک ده کیلویی توس', category: 'حبوبات', image: '/img/product-15.png', description: 'جو پرک تازه و با کیفیت در بسته‌بندی ده کیلویی، مناسب برای انواع سوپ و آش.', price: 280000, rating: 4.7, isAvailable: true },
+  { id: 16, title: 'لوبیاقرمز ده کیلویی توس', category: 'حبوبات', image: '/img/product-16.png', description: 'لوبیا قرمز درجه یک و یکدست در بسته‌بندی ده کیلویی، مناسب برای مصارف عمده.', price: 1100000, rating: 4.9, isAvailable: true },
+  { id: 17, title: 'جو پوست کنده ده کیلویی توس', category: 'حبوبات', image: '/img/product-17.png', description: 'جو پوست کنده با کیفیت عالی، پاک شده و آماده طبخ در بسته‌بندی ده کیلویی.', price: 260000, rating: 4.6, isAvailable: true },
+  { id: 18, title: 'بلغور گندم ده کیلویی توس', category: 'حبوبات', image: '/img/product-18.png', description: 'بلغور گندم تازه و با کیفیت در بسته‌بندی اقتصادی ده کیلویی.', price: 240000, rating: 4.4, isAvailable: true },
+  { id: 19, title: 'بلغور جو ده کیلویی توس', category: 'حبوبات', image: '/img/product-19.png', description: 'بلغور جو با کیفیت عالی، مناسب برای انواع آش و غذاهای سنتی در بسته‌بندی ده کیلویی.', price: 230000, rating: 4.5, isAvailable: true },
+  { id: 20, title: 'نشاسته ده کیلویی توس', category: 'حبوبات', image: '/img/product-20.png', description: 'نشاسته گندم با کیفیت عالی، سفید و شفاف در بسته‌بندی ده کیلویی.', price: 320000, rating: 4.7, isAvailable: true },
+  { id: 21, title: 'سبزی قرمه سبزی توس', category: 'سبزیجات', image: '/img/product-21.png', description: 'ترکیب سبزیجات قرمه سبزی، شسته شده و خرد شده با رعایت اصول بهداشتی.', price: 58000, rating: 4.9, isAvailable: true },
+  { id: 22, title: 'سبزی پلو توس', category: 'سبزیجات', image: '/img/product-22.png', description: 'سبزی پلویی معطر و تازه، آماده برای طبخ یک پلوی ایرانی اصیل.', price: 58000, rating: 4.8, isAvailable: true },
+  { id: 23, title: 'سبزی آش توس', category: 'سبزیجات', image: '/img/product-23.png', description: 'سبزی مخصوص آش، با ترکیب استاندارد و کیفیت عالی.', price: 55000, rating: 4.7, isAvailable: true },
+  { id: 24, title: 'سبزی کوکو توس', category: 'سبزیجات', image: '/img/product-24.png', description: 'سبزی کوکو تازه و خوش عطر، آماده برای تهیه یک کوکوی ترد و خوشمزه.', price: 58000, rating: 4.8, isAvailable: true },
+  { id: 25, title: 'شوید خشک توس', category: 'سبزیجات', image: '/img/product-25.png', description: 'شوید خشک با عطر ماندگار و رنگ سبز طبیعی، بدون هیچ‌گونه ناخالصی.', price: 45000, rating: 4.9, isAvailable: true },
+  { id: 26, title: 'نعناع خشک توس', category: 'سبزیجات', image: '/img/product-26.png', description: 'نعناع خشک معطر، تهیه شده از بهترین برگ‌های نعناع، مناسب برای دوغ و ماست.', price: 42000, rating: 4.8, isAvailable: true },
+  { id: 27, title: 'جعفری خشک توس', category: 'سبزیجات', image: '/img/product-27.png', description: 'جعفری خشک با کیفیت بالا، مناسب برای انواع سوپ و خوراک.', price: 40000, rating: 4.6, isAvailable: true },
+  { id: 28, title: 'مرزه توس', category: 'سبزیجات', image: '/img/product-28.png', description: 'مرزه خشک معطر و با کیفیت، پاک شده و آماده مصرف.', price: 40000, rating: 4.7, isAvailable: true },
 ];
 
 export const ProductsPage: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('همه');
   const [onlyAvailable, setOnlyAvailable] = useState(false);
-  const [maxPrice, setMaxPrice] = useState<number>(800000);
-  const [sortBy, setSortBy] = useState<'default' | 'price-asc' | 'price-desc' | 'rating'>('default');
+  const [sortBy, setSortBy] = useState<'default' | 'rating'>('default');
   const [viewType, setViewType] = useState<'grid' | 'list'>('grid');
 
   const categories = useMemo(() => ['همه', ...Array.from(new Set(allProducts.map(p => p.category)))], []);
@@ -36,35 +51,29 @@ export const ProductsPage: React.FC = () => {
       const matchesSearch = p.title.includes(searchQuery) || p.description.includes(searchQuery);
       const matchesCategory = selectedCategory === 'همه' || p.category === selectedCategory;
       const matchesAvailability = !onlyAvailable || p.isAvailable;
-      const matchesPrice = p.price <= maxPrice;
-      return matchesSearch && matchesCategory && matchesAvailability && matchesPrice;
+      return matchesSearch && matchesCategory && matchesAvailability;
     });
 
-    if (sortBy === 'price-asc') {
-      result.sort((a, b) => a.price - b.price);
-    } else if (sortBy === 'price-desc') {
-      result.sort((a, b) => b.price - a.price);
-    } else if (sortBy === 'rating') {
+    if (sortBy === 'rating') {
       result.sort((a, b) => b.rating - a.rating);
     }
 
     return result;
-  }, [searchQuery, selectedCategory, onlyAvailable, maxPrice, sortBy]);
+  }, [searchQuery, selectedCategory, onlyAvailable, sortBy]);
 
   const resetFilters = () => {
     setSearchQuery('');
     setSelectedCategory('همه');
     setOnlyAvailable(false);
-    setMaxPrice(800000);
     setSortBy('default');
   };
 
-  const hasActiveFilters = searchQuery !== '' || selectedCategory !== 'همه' || onlyAvailable || maxPrice < 800000;
+  const hasActiveFilters = searchQuery !== '' || selectedCategory !== 'همه' || onlyAvailable;
 
   return (
     <div className="bg-white">
       {/* Header */}
-      <div className="bg-gradient-to-b from-gray-100 to-white border-b border-gray-100 py-12">
+      <div className="bg-gradient-to-b from-gray-100 to-white border-b border-gray-100 pt-32 pb-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center md:text-right">
            <nav className="flex items-center justify-center md:justify-start gap-2 text-sm text-gray-500 mb-6">
               <span className="hover:text-toos-green cursor-pointer">خانه</span>
@@ -124,29 +133,6 @@ export const ProductsPage: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Price Range */}
-                <div>
-                   <div className="flex justify-between items-center mb-4 pr-2">
-                      <label className="text-sm font-black text-gray-900">حداکثر قیمت</label>
-                      <span className="text-xs font-bold text-toos-green bg-green-50 px-2 py-1 rounded-lg">
-                        {maxPrice.toLocaleString()} تومان
-                      </span>
-                   </div>
-                   <input 
-                     type="range" 
-                     min="0" 
-                     max="800000" 
-                     step="10000"
-                     value={maxPrice}
-                     onChange={(e) => setMaxPrice(parseInt(e.target.value))}
-                     className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-toos-green"
-                   />
-                   <div className="flex justify-between mt-2 text-[10px] text-gray-400 font-bold px-1">
-                      <span>۰</span>
-                      <span>۸۰۰,۰۰۰+ تومان</span>
-                   </div>
-                </div>
-
                 {/* Availability Toggle */}
                 <div className="flex items-center justify-between bg-white p-4 rounded-2xl border border-gray-100">
                    <span className="text-sm font-bold text-gray-700">فقط کالاهای موجود</span>
@@ -193,8 +179,6 @@ export const ProductsPage: React.FC = () => {
                         className="bg-gray-50 border border-gray-100 rounded-2xl py-2.5 pr-4 pl-10 text-sm font-bold outline-none focus:ring-4 focus:ring-toos-green/10 focus:border-toos-green appearance-none cursor-pointer min-w-[180px]"
                       >
                         <option value="default">پیش‌فرض (جدیدترین)</option>
-                        <option value="price-asc">قیمت: کم به زیاد</option>
-                        <option value="price-desc">قیمت: زیاد به کم</option>
                         <option value="rating">محبوب‌ترین‌ها</option>
                       </select>
                       <ArrowUpDown size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
@@ -287,18 +271,11 @@ export const ProductsPage: React.FC = () => {
                     </div>
                     
                     <div className="mt-auto pt-6 border-t border-gray-50 flex flex-col gap-4">
-                       <div className="flex items-end justify-between">
-                          <div className="flex flex-col">
-                             <span className="text-xs text-gray-400 font-bold mb-1">قیمت هر بسته:</span>
-                             <span className="text-2xl font-black text-toos-dark">
-                                {product.price.toLocaleString()} 
-                                <span className="text-xs font-bold mr-1">تومان</span>
-                             </span>
-                          </div>
+                       <div className="flex items-center justify-between">
                           {product.isAvailable ? (
                              <div className="flex items-center gap-1 text-toos-green text-xs font-bold">
                                <CheckCircle2 size={14} />
-                               موجود
+                               موجود در انبار
                              </div>
                           ) : (
                              <div className="flex items-center gap-1 text-red-400 text-xs font-bold">
@@ -306,18 +283,17 @@ export const ProductsPage: React.FC = () => {
                                ناموجود
                              </div>
                           )}
+                          <div className="flex items-center gap-1 text-gray-400 text-[10px] font-bold">
+                            <Star size={12} className="fill-toos-gold text-toos-gold" />
+                            {product.rating} امتیاز
+                          </div>
                        </div>
 
                        <button 
-                        disabled={!product.isAvailable}
-                        className={`w-full flex items-center justify-center gap-2 py-4 rounded-[1.25rem] font-black text-sm transition-all shadow-xl active:scale-95 ${
-                          product.isAvailable 
-                          ? 'bg-toos-green text-white hover:bg-toos-dark shadow-green-100' 
-                          : 'bg-gray-100 text-gray-400 cursor-not-allowed shadow-none'
-                        }`}
+                        className="w-full flex items-center justify-center gap-2 py-4 rounded-[1.25rem] font-black text-sm transition-all bg-gray-50 text-toos-dark hover:bg-toos-green hover:text-white border border-gray-100 shadow-sm active:scale-95"
                        >
-                          <ShoppingCart size={18} />
-                          {product.isAvailable ? 'افزودن به سبد خرید' : 'اطلاع از موجودی'}
+                          مشاهده جزئیات محصول
+                          <ArrowLeft size={18} />
                        </button>
                     </div>
                   </div>
