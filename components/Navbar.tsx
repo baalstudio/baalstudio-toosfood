@@ -28,6 +28,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentPage }) => {
     { name: 'خانه', page: 'home', sectionId: undefined },
     { name: 'درباره ما', page: 'about', sectionId: undefined },
     { name: 'محصولات', page: 'products', sectionId: 'products' },
+    { name: 'گواهینامه‌ها', page: 'certificates', sectionId: undefined },
     { name: 'وبلاگ و آموزش', page: 'blog', sectionId: undefined },
     { name: 'آشپز هوشمند', page: 'ai-chef', sectionId: undefined },
     { name: 'تماس با ما', page: 'contact', sectionId: undefined },
@@ -55,9 +56,13 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentPage }) => {
         <div className="flex justify-between items-center h-16">
           
           {/* Logo Section */}
-          <div className="flex-shrink-0 flex items-center cursor-pointer" onClick={() => handleNavClick('home')}>
+          <button 
+            className="flex-shrink-0 flex items-center outline-none focus:ring-2 focus:ring-toos-green/20 rounded-xl transition-all" 
+            onClick={() => handleNavClick('home')}
+            aria-label="برو به صفحه اصلی"
+          >
             <Logo className={`transition-transform duration-500 ${isNavbarOpaque ? 'h-12 scale-90' : 'h-16 scale-100'} origin-right`} />
-          </div>
+          </button>
 
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center space-x-6 space-x-reverse">

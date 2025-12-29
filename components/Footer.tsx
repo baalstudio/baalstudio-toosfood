@@ -85,6 +85,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                 { name: 'صفحه اصلی', page: 'home' },
                 { name: 'فروشگاه حبوبات', page: 'products' },
                 { name: 'درباره توس ۲۴۰۰', page: 'about' },
+                { name: 'گواهینامه‌ها و افتخارات', page: 'certificates' },
                 { name: 'مجله و آموزش آشپزی', page: 'blog' },
                 { name: 'آشپز هوشمند (AI)', page: 'ai-chef' },
                 { name: 'تماس با کارخانه', page: 'contact' }

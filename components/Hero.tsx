@@ -1,7 +1,11 @@
 import React from 'react';
 import { ArrowLeft, ChevronDown, Sparkles, ShieldCheck, Globe } from 'lucide-react';
 
-export const Hero: React.FC = () => {
+interface HeroProps {
+  onNavigate?: (page: string, sectionId?: string) => void;
+}
+
+export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
   return (
     <div className="relative min-h-screen w-full flex flex-col items-center justify-center overflow-hidden bg-black">
       {/* Cinematic Background Image */}
@@ -50,6 +54,7 @@ export const Hero: React.FC = () => {
           </button>
           
           <button 
+            onClick={() => onNavigate?.('certificates')}
             className="bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white px-12 py-5 rounded-2xl font-black text-xl transition-all flex items-center gap-3 group"
           >
             <ShieldCheck size={24} className="text-toos-gold" />

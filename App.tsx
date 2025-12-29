@@ -10,9 +10,10 @@ import { SupportChat } from './components/SupportChat';
 import { ProductsPage } from './components/ProductsPage';
 import { ContactPage } from './components/ContactPage';
 import { AboutPage } from './components/AboutPage';
+import { CertificatesPage } from './components/CertificatesPage';
 
 function App() {
-  const [currentPage, setCurrentPage] = useState<'home' | 'blog' | 'products' | 'ai-chef' | 'contact' | 'about'>('home');
+  const [currentPage, setCurrentPage] = useState<'home' | 'blog' | 'products' | 'ai-chef' | 'contact' | 'about' | 'certificates'>('home');
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -24,7 +25,8 @@ function App() {
                       (page === 'products' ? 'products' : 
                       (page === 'ai-chef' ? 'ai-chef' : 
                       (page === 'contact' ? 'contact' : 
-                      (page === 'about' ? 'about' : 'home'))));
+                      (page === 'about' ? 'about' : 
+                      (page === 'certificates' ? 'certificates' : 'home')))));
     
     setCurrentPage(targetPage);
 
@@ -44,7 +46,7 @@ function App() {
       <main>
         {currentPage === 'home' && (
           <>
-            <Hero />
+            <Hero onNavigate={handleNavigate} />
             <Features />
             
             <div className="bg-white pb-20">
@@ -91,6 +93,12 @@ function App() {
         {currentPage === 'about' && (
           <div className="min-h-screen">
              <AboutPage />
+          </div>
+        )}
+
+        {currentPage === 'certificates' && (
+          <div className="min-h-screen">
+             <CertificatesPage />
           </div>
         )}
       </main>
