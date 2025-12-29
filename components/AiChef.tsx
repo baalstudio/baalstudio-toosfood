@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ChefHat, Sparkles, Loader2, Utensils, Zap, BookOpen, ChevronRight, Share2, Printer } from 'lucide-react';
-import { generateRecipe } from '../services/geminiService';
+// import { generateRecipe } from '../services/geminiService';
 
 interface AiChefProps {
   viewMode?: 'preview' | 'full';
@@ -27,8 +27,8 @@ export const AiChef: React.FC<AiChefProps> = ({ viewMode = 'preview', onFullView
     setRecipe('');
     
     try {
-      const result = await generateRecipe(selectedIngredient);
-      setRecipe(result);
+      // const result = await generateRecipe(selectedIngredient);
+      // setRecipe(result);
     } catch (err) {
       setRecipe("متاسفانه خطایی در دریافت دستور پخت نیستم. لطفاً دوباره تلاش کنید.");
     } finally {

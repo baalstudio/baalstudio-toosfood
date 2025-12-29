@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { MessageCircle, X, Send, Loader2, Minus, User, Bot } from 'lucide-react';
-import { createSupportChat } from '../services/geminiService';
+// import { createSupportChat } from '../services/geminiService';
 import { Chat } from "@google/genai";
 
 interface Message {
@@ -21,7 +21,7 @@ export const SupportChat: React.FC = () => {
 
   useEffect(() => {
     // Initialize chat session
-    chatInstance.current = createSupportChat();
+    // chatInstance.current = createSupportChat();
   }, []);
 
   useEffect(() => {
