@@ -6,7 +6,7 @@ import {
   CheckCircle2, AlertCircle, Trash2, ArrowLeft 
 } from 'lucide-react';
 
-const allProducts: Product[] = [
+export const allProducts: Product[] = [
   { id: 1, title: 'آرد برنج توس', category: 'ادویه و خشکبار', image: '/img/product-1.png', description: 'آرد برنج با کیفیت عالی، تهیه شده از بهترین برنج‌های ایرانی، مناسب برای انواع دسر و شیرینی.', price: 45000, rating: 4.8, isAvailable: true, isNew: true },
   { id: 2, title: 'زیره سیاه توس', category: 'ادویه و خشکبار', image: '/img/product-2.png', description: 'زیره سیاه اعلا، با عطر و طعم فوق‌العاده، پاک شده و آماده مصرف.', price: 120000, rating: 4.9, isAvailable: true },
   { id: 3, title: 'زرشک توس', category: 'ادویه و خشکبار', image: '/img/product-3.png', description: 'زرشک درجه یک، با رنگی شفاف و طعمی عالی، دستچین شده برای سفره‌های شما.', price: 180000, rating: 4.7, isAvailable: true },
@@ -37,7 +37,11 @@ const allProducts: Product[] = [
   { id: 28, title: 'مرزه توس', category: 'سبزیجات', image: '/img/product-28.png', description: 'مرزه خشک معطر و با کیفیت، پاک شده و آماده مصرف.', price: 40000, rating: 4.7, isAvailable: true },
 ];
 
-export const ProductsPage: React.FC = () => {
+interface ProductsPageProps {
+  onProductClick?: (productId: number) => void;
+}
+
+export const ProductsPage: React.FC<ProductsPageProps> = ({ onProductClick }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('همه');
   const [onlyAvailable, setOnlyAvailable] = useState(false);
@@ -260,14 +264,16 @@ export const ProductsPage: React.FC = () => {
                     <Heart size={20} />
                   </button>
 
-                  {/* Image Container */}
-                  <div className={`relative overflow-hidden bg-gray-50 ${
-                    viewType === 'list' ? 'w-64 h-52 flex-shrink-0 rounded-[2rem]' : 'h-72'
+                  {/* Product Image */}
+                  <div className={`relative overflow-hidden bg-gray-50 flex items-center justify-center ${
+                    viewType === 'list' ? 'w-48 h-48 rounded-3xl' : 'aspect-square'
                   }`}>
                     <img 
                       src={product.image} 
                       alt={product.title} 
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000"
+                      className={`transition-transform duration-700 group-hover:scale-110 object-contain p-4 ${
+                        !product.isAvailable ? 'grayscale' : ''
+                      }`}
                     />
                     <div className="absolute bottom-4 right-4 bg-white/95 backdrop-blur-md px-4 py-1.5 rounded-2xl text-[10px] font-black text-toos-green uppercase shadow-md flex items-center gap-1.5">
                       <Star size={12} className="fill-toos-gold text-toos-gold" />
@@ -288,13 +294,13 @@ export const ProductsPage: React.FC = () => {
                     <div className="mt-auto pt-6 border-t border-gray-50 flex flex-col gap-4">
                        <div className="flex items-center justify-between">
                           {product.isAvailable ? (
-                             <div className="flex items-center gap-1 text-toos-green text-xs font-bold">
-                               <CheckCircle2 size={14} />
-                               موجود در انبار
+                             <div className="flex items-center gap-2 text-toos-green text-xs font-black">
+                               <div className="w-2 h-2 bg-toos-green rounded-full animate-pulse"></div>
+                               موجود در انبار کارخانه
                              </div>
                           ) : (
-                             <div className="flex items-center gap-1 text-red-400 text-xs font-bold">
-                               <AlertCircle size={14} />
+                             <div className="flex items-center gap-2 text-red-400 text-xs font-black">
+                               <div className="w-2 h-2 bg-red-400 rounded-full"></div>
                                ناموجود
                              </div>
                           )}
@@ -305,7 +311,8 @@ export const ProductsPage: React.FC = () => {
                        </div>
 
                        <button 
-                        className="w-full flex items-center justify-center gap-2 py-4 rounded-[1.25rem] font-black text-sm transition-all bg-gray-50 text-toos-dark hover:bg-toos-green hover:text-white border border-gray-100 shadow-sm active:scale-95"
+                        onClick={() => onProductClick?.(product.id)}
+                        className="w-full flex items-center justify-center gap-2 py-4 rounded-[1.25rem] font-black text-sm transition-all bg-toos-green text-white hover:bg-toos-dark shadow-lg shadow-green-100 active:scale-95"
                        >
                           مشاهده جزئیات محصول
                           <ArrowLeft size={18} />

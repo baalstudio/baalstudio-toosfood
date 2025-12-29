@@ -182,19 +182,20 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
-          <div className="flex flex-col md:flex-row items-center gap-4 text-center md:text-right">
-             <p className="text-gray-500 text-xs font-medium">
-               © ۱۴۰۳ تمامی حقوق مادی و معنوی این وب‌سایت متعلق به شرکت <span className="text-gray-300 font-black">فرآورده‌های غذایی توس</span> است.
+        <div className="pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8">
+          <div className="flex flex-col items-center md:items-start gap-4 text-center md:text-right">
+             <p className="text-gray-500 text-xs font-medium leading-relaxed">
+               © ۱۴۰۴ تمامی حقوق مادی و معنوی این وب‌سایت متعلق به شرکت <span className="text-gray-300 font-black">فرآورده‌های غذایی توس</span> است.
+             </p>
+             <p className="text-gray-600 text-[9px] font-medium tracking-[0.2em] uppercase">
+               Designed by : <span className="text-toos-gold/60 hover:text-toos-gold transition-colors">BAAL STUDIO</span>
              </p>
           </div>
-          <div className="flex items-center gap-8">
+          
+          <div className="flex items-center gap-6">
             <a href="#" className="text-gray-500 hover:text-white text-xs transition-colors font-bold">حریم خصوصی</a>
+            <div className="w-1 h-1 bg-white/10 rounded-full"></div>
             <a href="#" className="text-gray-500 hover:text-white text-xs transition-colors font-bold">شرایط استفاده</a>
-            <div className="w-px h-4 bg-white/10"></div>
-            <p className="text-gray-500 text-[10px] font-medium tracking-widest uppercase">
-              Designed by <span className="text-toos-gold">Creative Team</span>
-            </p>
           </div>
         </div>
 

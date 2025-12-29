@@ -12,11 +12,14 @@ import { ContactPage } from './components/ContactPage';
 import { AboutPage } from './components/AboutPage';
 import { CertificatesPage } from './components/CertificatesPage';
 import { BlogPostPage } from './components/BlogPostPage';
+import { ProductDetailPage } from './components/ProductDetailPage';
 import { blogPostsData } from './components/BlogSection';
+import { allProducts } from './components/ProductsPage';
 
 function App() {
-  const [currentPage, setCurrentPage] = useState<'home' | 'blog' | 'blog-post' | 'products' | 'ai-chef' | 'contact' | 'about' | 'certificates'>('home');
+  const [currentPage, setCurrentPage] = useState<'home' | 'blog' | 'blog-post' | 'products' | 'product-detail' | 'ai-chef' | 'contact' | 'about' | 'certificates'>('home');
   const [selectedPostId, setSelectedPostId] = useState<number | null>(null);
+  const [selectedProductId, setSelectedProductId] = useState<number | null>(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -27,10 +30,11 @@ function App() {
     const targetPage = (page === 'blog') ? 'blog' : 
                       (page === 'blog-post' ? 'blog-post' :
                       (page === 'products' ? 'products' : 
+                      (page === 'product-detail' ? 'product-detail' :
                       (page === 'ai-chef' ? 'ai-chef' : 
                       (page === 'contact' ? 'contact' : 
                       (page === 'about' ? 'about' : 
-                      (page === 'certificates' ? 'certificates' : 'home'))))));
+                      (page === 'certificates' ? 'certificates' : 'home')))))));
     
     setCurrentPage(targetPage);
 
@@ -48,6 +52,11 @@ function App() {
     setCurrentPage('blog-post');
   };
 
+  const handleProductClick = (productId: number) => {
+    setSelectedProductId(productId);
+    setCurrentPage('product-detail');
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 font-sans text-right" dir="rtl">
       <Navbar onNavigate={handleNavigate} currentPage={currentPage} />
@@ -59,7 +68,7 @@ function App() {
             <Features />
             
             <div className="bg-white pb-20">
-               <ProductGrid isLanding={true} />
+               <ProductGrid isLanding={true} onProductClick={handleProductClick} />
                <div className="text-center mt-8">
                   <button 
                     onClick={() => handleNavigate('products')}
@@ -81,7 +90,21 @@ function App() {
 
         {currentPage === 'products' && (
           <div className="min-h-screen">
-             <ProductsPage />
+             <ProductsPage onProductClick={handleProductClick} />
+          </div>
+        )}
+
+        {currentPage === 'product-detail' && selectedProductId !== null && (
+          <div className="min-h-screen">
+             {(() => {
+               const product = allProducts.find(p => p.id === selectedProductId);
+               return product ? (
+                 <ProductDetailPage 
+                   product={product} 
+                   onBack={() => setCurrentPage('products')} 
+                 />
+               ) : null;
+             })()}
           </div>
         )}
 

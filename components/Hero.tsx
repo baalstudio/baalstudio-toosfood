@@ -96,7 +96,6 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
         onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })}
         className="absolute bottom-10 left-1/2 -translate-x-1/2 text-white/40 hover:text-white transition-colors animate-bounce flex flex-col items-center gap-2"
       >
-        <span className="text-[10px] font-black uppercase tracking-[0.3em]">بیشتر بخوانید</span>
         <ChevronDown size={32} />
       </button>
 

@@ -4,6 +4,7 @@ import { Filter, Search, XCircle, ArrowLeft } from 'lucide-react';
 
 interface ProductGridProps {
   isLanding?: boolean;
+  onProductClick?: (productId: number) => void;
 }
 
 const products: Product[] = [
@@ -37,7 +38,7 @@ const products: Product[] = [
   { id: 28, title: 'مرزه توس', category: 'سبزیجات', image: 'https://www.toos-food.com/wp-content/uploads/17t.png', description: 'مرزه خشک معطر و با کیفیت، پاک شده و آماده مصرف.', price: 40000, rating: 4.7, isAvailable: true },
 ];
 
-export const ProductGrid: React.FC<ProductGridProps> = ({ isLanding = false }) => {
+export const ProductGrid: React.FC<ProductGridProps> = ({ isLanding = false, onProductClick }) => {
   const [selectedCategory, setSelectedCategory] = useState<string>('همه');
   const [searchQuery, setSearchQuery] = useState<string>('');
   
@@ -132,11 +133,11 @@ export const ProductGrid: React.FC<ProductGridProps> = ({ isLanding = false }) =
               className="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group flex flex-col border border-gray-100 animate-in fade-in slide-in-from-bottom-4"
             >
               {/* Product Image */}
-              <div className="relative h-52 overflow-hidden bg-gray-200">
+              <div className="relative aspect-square overflow-hidden bg-gray-50 flex items-center justify-center">
                 <img 
                   src={product.image} 
                   alt={product.title} 
-                  className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
+                  className="w-full h-full object-contain p-4 transform group-hover:scale-110 transition-transform duration-700"
                 />
                 <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-[10px] font-black text-toos-green uppercase tracking-wider shadow-sm">
                   {product.category}
@@ -150,7 +151,10 @@ export const ProductGrid: React.FC<ProductGridProps> = ({ isLanding = false }) =
                   {product.description}
                 </p>
                 <div className="pt-4 border-t border-gray-50 flex items-center justify-center">
-                   <button className="text-toos-green font-bold text-sm hover:text-toos-dark flex items-center gap-1 transition-colors">
+                   <button 
+                    onClick={() => onProductClick?.(product.id)}
+                    className="text-toos-green font-bold text-sm hover:text-toos-dark flex items-center gap-1 transition-colors"
+                   >
                       مشاهده جزئیات
                       <ArrowLeft size={14} />
                    </button>
