@@ -22,11 +22,62 @@ function App() {
   const [selectedProductId, setSelectedProductId] = useState<number | null>(null);
 
   useEffect(() => {
+    // Sync state with URL on initial load and browser back/forward
+    const handlePopState = () => {
+      const path = window.location.pathname.slice(1); // Remove leading slash
+      const searchParams = new URLSearchParams(window.location.search);
+      
+      if (!path || path === '') {
+        setCurrentPage('home');
+      } else if (path === 'products') {
+        setCurrentPage('products');
+      } else if (path === 'blog') {
+        setCurrentPage('blog');
+      } else if (path === 'about') {
+        setCurrentPage('about');
+      } else if (path === 'contact') {
+        setCurrentPage('contact');
+      } else if (path === 'certificates') {
+        setCurrentPage('certificates');
+      } else if (path === 'ai-chef') {
+        setCurrentPage('ai-chef');
+      } else if (path === 'product-detail') {
+        const id = searchParams.get('id');
+        if (id) {
+          setSelectedProductId(Number(id));
+          setCurrentPage('product-detail');
+        } else {
+          setCurrentPage('products');
+        }
+      } else if (path === 'blog-post') {
+        const id = searchParams.get('id');
+        if (id) {
+          setSelectedPostId(Number(id));
+          setCurrentPage('blog-post');
+        } else {
+          setCurrentPage('blog');
+        }
+      }
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    handlePopState(); // Call once on mount
+
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  useEffect(() => {
     window.scrollTo(0, 0);
   }, [currentPage]);
 
+  const updateUrl = (page: string, id?: number) => {
+    const url = page === 'home' ? '/' : `/${page}${id ? `?id=${id}` : ''}`;
+    if (window.location.pathname + window.location.search !== url) {
+      window.history.pushState({ page, id }, '', url);
+    }
+  };
+
   const handleNavigate = (page: string, sectionId?: string) => {
-    // Determine target page type safely
     const targetPage = (page === 'blog') ? 'blog' : 
                       (page === 'blog-post' ? 'blog-post' :
                       (page === 'products' ? 'products' : 
@@ -37,9 +88,9 @@ function App() {
                       (page === 'certificates' ? 'certificates' : 'home')))))));
     
     setCurrentPage(targetPage);
+    updateUrl(targetPage);
 
     if (sectionId && targetPage === 'home') {
-       // Wait for render to complete then scroll
        setTimeout(() => {
          const element = document.getElementById(sectionId);
          if (element) element.scrollIntoView({ behavior: 'smooth' });
@@ -50,11 +101,13 @@ function App() {
   const handlePostClick = (postId: number) => {
     setSelectedPostId(postId);
     setCurrentPage('blog-post');
+    updateUrl('blog-post', postId);
   };
 
   const handleProductClick = (productId: number) => {
     setSelectedProductId(productId);
     setCurrentPage('product-detail');
+    updateUrl('product-detail', productId);
   };
 
   return (

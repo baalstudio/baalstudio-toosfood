@@ -10,13 +10,20 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
     <div className="relative min-h-screen w-full flex flex-col items-center justify-center overflow-hidden bg-black">
       {/* Cinematic Background Image */}
       <div className="absolute inset-0">
+        {/* Desktop Image */}
         <img 
-          src="https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?q=80&w=2070&auto=format&fit=crop" 
-          alt="Toos Food Production" 
-          className="w-full h-full object-cover opacity-60 scale-105 animate-slow-zoom"
+          src="/img/hero-main.jpg" 
+          alt="Toos Food Production Desktop" 
+          className="hidden md:block w-full h-full object-cover opacity-70 scale-105 animate-slow-zoom"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-transparent to-black/90"></div>
-        <div className="absolute inset-0 bg-toos-dark/10 backdrop-brightness-[0.8]"></div>
+        {/* Mobile Image */}
+        <img 
+          src="/img/hero-mobile.jpg" 
+          alt="Toos Food Production Mobile" 
+          className="block md:hidden w-full h-full object-cover opacity-75 scale-105 animate-slow-zoom"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/80"></div>
+        <div className="absolute inset-0 bg-toos-dark/5 backdrop-brightness-[0.9]"></div>
       </div>
 
       {/* Floating Particle/Aura Effects */}
@@ -90,14 +97,6 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
            </div>
         </div>
       </div>
-
-      {/* Animated Scroll Down indicator */}
-      <button 
-        onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 text-white/40 hover:text-white transition-colors animate-bounce flex flex-col items-center gap-2"
-      >
-        <ChevronDown size={32} />
-      </button>
 
       <style dangerouslySetInnerHTML={{ __html: `
         @keyframes slow-zoom {

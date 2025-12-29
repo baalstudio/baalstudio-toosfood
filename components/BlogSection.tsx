@@ -15,7 +15,7 @@ export const blogPostsData: BlogPost[] = [
     date: '۲۰ آبان ۱۴۰۳',
     readTime: '۱۰ دقیقه',
     category: 'آموزش آشپزی',
-    author: 'دکتر محمد ابوعطی',
+    author: 'دکتر محمد ابوعطا',
     content: (
       <div className="space-y-6">
         <p className="text-gray-600 leading-relaxed">
@@ -110,7 +110,7 @@ export const blogPostsData: BlogPost[] = [
     date: '۰۸ آبان ۱۴۰۳',
     readTime: '۱۵ دقیقه',
     category: 'غذاهای سنتی',
-    author: 'دکتر محمد ابوعطی',
+    author: 'دکتر محمد ابوعطا',
     content: (
        <div className="space-y-6">
         <p className="text-gray-600 leading-relaxed">
@@ -141,7 +141,7 @@ export const blogPostsData: BlogPost[] = [
     date: '۰۵ آبان ۱۴۰۳',
     readTime: '۸ دقیقه',
     category: 'سلامت و تغذیه',
-    author: 'دکتر محمد ابوعطی',
+    author: 'دکتر محمد ابوعطا',
     content: (
         <div className="space-y-6">
             <p className="text-gray-600 leading-relaxed">لوبیا چیتی یکی از پرطرفدارترین حبوبات در ایران است که علاوه بر طعم عالی، خواص درمانی بی‌شماری دارد.</p>
@@ -174,7 +174,7 @@ export const blogPostsData: BlogPost[] = [
     date: '۲۸ مهر ۱۴۰۳',
     readTime: '۲۰ دقیقه',
     category: 'غذاهای سنتی',
-    author: 'دکتر محمد ابوعطی',
+    author: 'دکتر محمد ابوعطا',
     content: (<div className="text-gray-600">دستور پخت کامل آش شله قلمکار با استفاده از تمامی حبوبات توس فود...</div>)
   }
 ];
