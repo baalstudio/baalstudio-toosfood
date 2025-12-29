@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { Product } from '../types';
 import { 
   Search, X, ChevronRight, SlidersHorizontal, 
@@ -43,8 +43,23 @@ export const ProductsPage: React.FC = () => {
   const [onlyAvailable, setOnlyAvailable] = useState(false);
   const [sortBy, setSortBy] = useState<'default' | 'rating'>('default');
   const [viewType, setViewType] = useState<'grid' | 'list'>('grid');
+  const productsTopRef = useRef<HTMLDivElement>(null);
 
   const categories = useMemo(() => ['همه', ...Array.from(new Set(allProducts.map(p => p.category)))], []);
+
+  useEffect(() => {
+    if (productsTopRef.current) {
+      // Scroll to top of products list when filters change, 
+      // but only if we are already scrolled past it
+      const rect = productsTopRef.current.getBoundingClientRect();
+      if (rect.top < 100) {
+        window.scrollTo({
+          top: window.scrollY + rect.top - 120, // 120px offset for fixed navbar
+          behavior: 'smooth'
+        });
+      }
+    }
+  }, [selectedCategory, searchQuery, onlyAvailable]);
 
   const filteredProducts = useMemo(() => {
     let result = allProducts.filter(p => {
@@ -158,7 +173,7 @@ export const ProductsPage: React.FC = () => {
           </aside>
 
           {/* Main Listing Area */}
-          <main className="flex-1">
+          <main className="flex-1" ref={productsTopRef}>
             {/* Toolbar */}
             <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-8 bg-white p-2 rounded-[2rem] border border-gray-100 shadow-sm">
                 <div className="flex items-center gap-2 pr-4">

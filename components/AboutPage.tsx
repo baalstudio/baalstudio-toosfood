@@ -4,6 +4,7 @@ import {
   ChevronRight, CheckCircle2, Globe, HeartPulse, 
   ShieldCheck, Leaf, FlaskConical, Microscope 
 } from 'lucide-react';
+import { Logo } from './Logo';
 
 export const AboutPage: React.FC = () => {
   const stats = [
@@ -56,6 +57,11 @@ export const AboutPage: React.FC = () => {
         </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="max-w-3xl">
+             <div className="mb-10 flex justify-start">
+                <div className="bg-white/10 backdrop-blur-md p-4 rounded-3xl border border-white/20 inline-block">
+                   <Logo className="h-16" />
+                </div>
+             </div>
              <nav className="flex items-center gap-2 text-sm text-green-200 mb-8 opacity-80">
                 <span className="hover:text-white cursor-pointer">خانه</span>
                 <ChevronRight size={14} />
@@ -92,6 +98,9 @@ export const AboutPage: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
           <div className="relative">
              <div className="absolute -top-10 -right-10 w-64 h-64 bg-toos-gold/10 rounded-full blur-3xl"></div>
+             <div className="absolute -bottom-6 -left-6 z-30 bg-white p-4 rounded-2xl shadow-xl border border-gray-100 hidden md:block animate-bounce">
+                <Logo className="h-10" />
+             </div>
              <div className="relative rounded-[3rem] overflow-hidden shadow-2xl">
                 <img 
                   src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=800&auto=format&fit=crop" 

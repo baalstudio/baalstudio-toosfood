@@ -6,7 +6,7 @@ import {
 } from 'lucide-react';
 import { BlogPost } from '../types';
 
-const blogPostsData: BlogPost[] = [
+export const blogPostsData: BlogPost[] = [
   {
     id: 1,
     title: 'رازهای پخت فلافل ترد و بازاری در خانه',
@@ -15,7 +15,7 @@ const blogPostsData: BlogPost[] = [
     date: '۲۰ آبان ۱۴۰۳',
     readTime: '۱۰ دقیقه',
     category: 'آموزش آشپزی',
-    author: 'سرآشپز حسینی',
+    author: 'دکتر محمد ابوعطی',
     content: (
       <div className="space-y-6">
         <p className="text-gray-600 leading-relaxed">
@@ -66,7 +66,7 @@ const blogPostsData: BlogPost[] = [
     date: '۱۵ آبان ۱۴۰۳',
     readTime: '۱۲ دقیقه',
     category: 'نکات طلایی',
-    author: 'مریم رضایی',
+    author: 'مهندس محمدباقر ستاری',
     content: (
       <div className="space-y-6">
         <p className="text-gray-600 leading-relaxed">
@@ -110,7 +110,7 @@ const blogPostsData: BlogPost[] = [
     date: '۰۸ آبان ۱۴۰۳',
     readTime: '۱۵ دقیقه',
     category: 'غذاهای سنتی',
-    author: 'سرآشپز حسینی',
+    author: 'دکتر محمد ابوعطی',
     content: (
        <div className="space-y-6">
         <p className="text-gray-600 leading-relaxed">
@@ -141,7 +141,7 @@ const blogPostsData: BlogPost[] = [
     date: '۰۵ آبان ۱۴۰۳',
     readTime: '۸ دقیقه',
     category: 'سلامت و تغذیه',
-    author: 'دکتر محمدی',
+    author: 'دکتر محمد ابوعطی',
     content: (
         <div className="space-y-6">
             <p className="text-gray-600 leading-relaxed">لوبیا چیتی یکی از پرطرفدارترین حبوبات در ایران است که علاوه بر طعم عالی، خواص درمانی بی‌شماری دارد.</p>
@@ -163,7 +163,7 @@ const blogPostsData: BlogPost[] = [
     date: '۰۱ آبان ۱۴۰۳',
     readTime: '۵ دقیقه',
     category: 'اخبار کارخانه',
-    author: 'مهندس اکبری',
+    author: 'مهندس محمدباقر ستاری',
     content: (<div className="text-gray-600">گزارشی از خطوط تولید هوشمند توس فود و استفاده از گازهای اتمسفر اصلاح شده برای ماندگاری بیشتر حبوبات...</div>)
   },
   {
@@ -174,7 +174,7 @@ const blogPostsData: BlogPost[] = [
     date: '۲۸ مهر ۱۴۰۳',
     readTime: '۲۰ دقیقه',
     category: 'غذاهای سنتی',
-    author: 'سرآشپز حسینی',
+    author: 'دکتر محمد ابوعطی',
     content: (<div className="text-gray-600">دستور پخت کامل آش شله قلمکار با استفاده از تمامی حبوبات توس فود...</div>)
   }
 ];
@@ -182,10 +182,10 @@ const blogPostsData: BlogPost[] = [
 interface BlogSectionProps {
   viewMode?: 'preview' | 'full';
   onViewAll?: () => void;
+  onPostClick?: (postId: number) => void;
 }
 
-export const BlogSection: React.FC<BlogSectionProps> = ({ viewMode = 'preview', onViewAll }) => {
-  const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
+export const BlogSection: React.FC<BlogSectionProps> = ({ viewMode = 'preview', onViewAll, onPostClick }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState('همه');
 
@@ -201,14 +201,10 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ viewMode = 'preview', 
 
   const featuredPost = useMemo(() => blogPostsData[0], []);
 
-  const openModal = (post: BlogPost) => {
-    setSelectedPost(post);
-    document.body.style.overflow = 'hidden';
-  };
-
-  const closeModal = () => {
-    setSelectedPost(null);
-    document.body.style.overflow = 'unset';
+  const handlePostClick = (post: BlogPost) => {
+    if (onPostClick) {
+      onPostClick(post.id);
+    }
   };
 
   if (viewMode === 'full') {
@@ -240,7 +236,7 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ viewMode = 'preview', 
                </div>
                <div className="lg:w-1/2 p-8 lg:p-16 flex flex-col justify-center">
                   <span className="bg-toos-gold text-white px-4 py-1 rounded-full text-xs font-black mb-6 inline-block w-fit">برگزیده هفته</span>
-                  <h2 className="text-3xl md:text-4xl font-black text-gray-900 mb-6 leading-tight hover:text-toos-green cursor-pointer transition-colors" onClick={() => openModal(featuredPost)}>
+                  <h2 className="text-3xl md:text-4xl font-black text-gray-900 mb-6 leading-tight hover:text-toos-green cursor-pointer transition-colors" onClick={() => handlePostClick(featuredPost)}>
                     {featuredPost.title}
                   </h2>
                   <p className="text-gray-500 text-lg mb-8 leading-relaxed line-clamp-3">
@@ -256,7 +252,7 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ viewMode = 'preview', 
                           <p className="text-xs text-gray-400">{featuredPost.date}</p>
                        </div>
                     </div>
-                    <button onClick={() => openModal(featuredPost)} className="bg-toos-green text-white px-8 py-3 rounded-2xl font-bold hover:bg-toos-dark transition-all flex items-center gap-2">
+                    <button onClick={() => handlePostClick(featuredPost)} className="bg-toos-green text-white px-8 py-3 rounded-2xl font-bold hover:bg-toos-dark transition-all flex items-center gap-2">
                        مطالعه کامل
                        <BookOpen size={18} />
                     </button>
@@ -306,7 +302,7 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ viewMode = 'preview', 
              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                {filteredPosts.map(post => (
                  <article key={post.id} className="group flex flex-col bg-white rounded-[2.5rem] overflow-hidden border border-gray-100 hover:border-green-100 hover:shadow-2xl transition-all duration-500">
-                    <div className="relative h-64 overflow-hidden cursor-pointer" onClick={() => openModal(post)}>
+                    <div className="relative h-64 overflow-hidden cursor-pointer" onClick={() => handlePostClick(post)}>
                       <img src={post.image} alt={post.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
                       <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-4 py-1.5 rounded-2xl text-xs font-black text-toos-green shadow-sm">
                         {post.category}
@@ -317,7 +313,7 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ viewMode = 'preview', 
                         <span className="flex items-center gap-1"><Calendar size={14} /> {post.date}</span>
                         <span className="flex items-center gap-1"><Clock size={14} /> {post.readTime}</span>
                       </div>
-                      <h3 className="text-2xl font-black text-gray-900 mb-4 group-hover:text-toos-green transition-colors leading-tight cursor-pointer" onClick={() => openModal(post)}>
+                      <h3 className="text-2xl font-black text-gray-900 mb-4 group-hover:text-toos-green transition-colors leading-tight cursor-pointer" onClick={() => handlePostClick(post)}>
                         {post.title}
                       </h3>
                       <p className="text-gray-500 text-sm leading-relaxed mb-8 line-clamp-3">
@@ -330,8 +326,11 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ viewMode = 'preview', 
                            </div>
                            <span className="text-xs font-bold text-gray-600">{post.author}</span>
                         </div>
-                        <button onClick={() => openModal(post)} className="text-toos-dark font-black text-sm flex items-center gap-2 group-hover:gap-4 transition-all">
-                           ادامه مطالعه
+                        <button 
+                          onClick={() => handlePostClick(post)}
+                          className="text-toos-green font-black text-sm flex items-center gap-1 hover:gap-2 transition-all"
+                        >
+                           ادامه مطلب
                            <ArrowLeft size={16} />
                         </button>
                       </div>
@@ -350,158 +349,90 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ viewMode = 'preview', 
              </div>
            )}
         </div>
-
-        {/* Modal Logic (Repeated for consistency) */}
-        {renderModal(selectedPost, closeModal)}
       </div>
     );
   }
 
   // Preview Mode (Home Page)
   return (
-    <section id="blog" className="py-24 bg-white">
+    <section className="py-24 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-16">
-          <div className="max-w-2xl">
-            <div className="flex items-center gap-2 mb-4">
-              <span className="w-12 h-1.5 bg-toos-gold rounded-full"></span>
-              <span className="text-toos-gold font-black text-sm uppercase tracking-widest">مجله سلامت</span>
-            </div>
-            <h2 className="text-4xl md:text-5xl font-black text-gray-900 leading-tight">
-               آخرین مطالب و <br/> <span className="text-toos-green">آموزش‌های کاربردی</span>
-            </h2>
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+          <div className="relative">
+             <div className="absolute -top-12 -right-12 w-24 h-24 bg-toos-green/5 rounded-full blur-2xl"></div>
+             <span className="bg-toos-green/10 text-toos-green px-6 py-2 rounded-full text-sm font-black mb-4 inline-block tracking-widest uppercase">Toos Food Magazine</span>
+             <h2 className="text-4xl md:text-6xl font-black text-gray-900 leading-tight">
+               مجله سلامت و <span className="text-toos-green relative inline-block">
+                 آشپزی
+                 <span className="absolute bottom-2 left-0 w-full h-3 bg-toos-green/20 -z-10 rounded-full"></span>
+               </span>
+             </h2>
           </div>
           <button 
-              onClick={onViewAll}
-              className="hidden md:flex items-center gap-3 bg-toos-light text-toos-green px-8 py-4 rounded-2xl font-black transition-all hover:bg-toos-green hover:text-white group"
+            onClick={onViewAll}
+            className="group flex items-center gap-3 text-toos-dark font-black text-lg hover:text-toos-green transition-all bg-gray-50 px-8 py-4 rounded-2xl hover:bg-green-50"
           >
-              مشاهده آرشیو کامل
-              <ArrowLeft size={20} className="group-hover:-translate-x-2 transition-transform" />
+            مشاهده همه مقالات
+            <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center group-hover:translate-x-2 transition-transform shadow-sm">
+              <ArrowLeft size={20} />
+            </div>
           </button>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
           {blogPostsData.slice(0, 3).map((post) => (
-            <article key={post.id} className="group bg-white rounded-[2rem] overflow-hidden border border-gray-100 hover:shadow-2xl transition-all duration-500">
-              <div className="relative h-60 overflow-hidden cursor-pointer" onClick={() => openModal(post)}>
+            <article 
+              key={post.id} 
+              className="group bg-white rounded-[3rem] overflow-hidden border border-gray-100 hover:border-green-100 hover:shadow-2xl transition-all duration-500 flex flex-col h-full"
+            >
+              <div className="relative h-72 overflow-hidden cursor-pointer" onClick={() => handlePostClick(post)}>
                 <img src={post.image} alt={post.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
-                <div className="absolute top-4 right-4 bg-white/95 px-3 py-1 rounded-xl text-[10px] font-black text-toos-green uppercase shadow-md">
+                <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                <div className="absolute top-6 right-6 bg-white/95 backdrop-blur-sm px-4 py-1.5 rounded-2xl text-xs font-black text-toos-green shadow-sm">
                   {post.category}
                 </div>
               </div>
-              <div className="p-8">
-                <div className="flex items-center gap-4 text-[10px] text-gray-400 mb-4 font-black">
-                  <span className="flex items-center gap-1"><Calendar size={12} /> {post.date}</span>
-                  <span className="flex items-center gap-1"><Clock size={12} /> {post.readTime}</span>
+              
+              <div className="p-8 flex flex-col flex-grow">
+                <div className="flex items-center gap-4 text-[10px] text-gray-400 mb-4 font-bold uppercase tracking-wider">
+                  <span className="flex items-center gap-1.5 bg-gray-50 px-2.5 py-1 rounded-lg"><Calendar size={12} className="text-toos-green" /> {post.date}</span>
+                  <span className="flex items-center gap-1.5 bg-gray-50 px-2.5 py-1 rounded-lg"><Clock size={12} className="text-toos-green" /> {post.readTime}</span>
                 </div>
-                <h3 className="text-xl font-black text-gray-900 mb-4 group-hover:text-toos-green transition-colors line-clamp-2 cursor-pointer" onClick={() => openModal(post)}>
+                
+                <h3 
+                  className="text-2xl font-black text-gray-900 mb-4 group-hover:text-toos-green transition-colors leading-tight cursor-pointer line-clamp-2"
+                  onClick={() => handlePostClick(post)}
+                >
                   {post.title}
                 </h3>
-                <p className="text-gray-500 text-sm leading-relaxed mb-6 line-clamp-3">
+                
+                <p className="text-gray-500 text-sm leading-relaxed mb-8 line-clamp-3">
                   {post.excerpt}
                 </p>
-                <button onClick={() => openModal(post)} className="text-toos-dark font-black text-xs flex items-center gap-2 group-hover:gap-3 transition-all">
-                  ادامه مطلب <ArrowLeft size={14} />
-                </button>
+                
+                <div className="mt-auto pt-6 border-t border-gray-50 flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 bg-toos-green/10 rounded-xl flex items-center justify-center text-toos-green font-bold">
+                       {post.author[0]}
+                    </div>
+                    <div>
+                       <p className="text-xs font-black text-gray-900">{post.author}</p>
+                       <p className="text-[10px] text-gray-400">نویسنده</p>
+                    </div>
+                  </div>
+                  
+                  <button 
+                    onClick={() => handlePostClick(post)}
+                    className="w-12 h-12 bg-gray-50 rounded-2xl flex items-center justify-center text-toos-dark hover:bg-toos-green hover:text-white transition-all hover:rotate-12 group/btn"
+                  >
+                    <ArrowLeft size={20} className="group-hover/btn:-translate-x-1 transition-transform" />
+                  </button>
+                </div>
               </div>
             </article>
           ))}
         </div>
-        
-        <div className="mt-12 text-center md:hidden">
-            <button onClick={onViewAll} className="w-full bg-toos-green text-white py-4 rounded-2xl font-black shadow-lg">
-                مشاهده آرشیو کامل
-            </button>
-        </div>
-
-        {renderModal(selectedPost, closeModal)}
       </div>
     </section>
   );
 };
-
-// Helper to render the post modal consistently
-function renderModal(post: BlogPost | null, onClose: () => void) {
-  if (!post) return null;
-  return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-      <div className="absolute inset-0 bg-black/80 backdrop-blur-md transition-opacity" onClick={onClose}></div>
-      
-      <div className="bg-white rounded-[3rem] w-full max-w-5xl max-h-[90vh] overflow-y-auto relative z-10 shadow-2xl animate-in fade-in zoom-in-95 duration-300 scrollbar-hide">
-        {/* Modal Header */}
-        <div className="relative h-72 md:h-96">
-          <img src={post.image} alt={post.title} className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
-          
-          <div className="absolute top-6 left-6 flex gap-4">
-             <button className="bg-white/20 hover:bg-white/40 text-white p-3 rounded-full backdrop-blur-md transition-all">
-                <Share2 size={24} />
-             </button>
-             <button onClick={onClose} className="bg-white text-gray-900 p-3 rounded-full shadow-xl hover:scale-110 transition-transform">
-                <X size={24} />
-             </button>
-          </div>
-
-          <div className="absolute bottom-10 right-10 left-10 text-white">
-             <span className="bg-toos-green text-white px-4 py-1 rounded-full text-xs font-black mb-4 inline-block shadow-lg">
-                {post.category}
-             </span>
-             <h2 className="text-3xl md:text-5xl font-black leading-tight drop-shadow-lg">
-                {post.title}
-             </h2>
-          </div>
-        </div>
-
-        {/* Modal Content */}
-        <div className="p-8 md:p-16">
-           <div className="flex flex-wrap items-center justify-between gap-6 text-sm text-gray-500 mb-12 border-b border-gray-100 pb-8">
-              <div className="flex items-center gap-8">
-                 <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-toos-light text-toos-green rounded-full flex items-center justify-center">
-                       <User size={20} />
-                    </div>
-                    <div>
-                       <p className="text-xs text-gray-400 font-bold">نویسنده</p>
-                       <p className="font-black text-gray-900">{post.author}</p>
-                    </div>
-                 </div>
-                 <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-gray-50 text-gray-400 rounded-full flex items-center justify-center">
-                       <Calendar size={20} />
-                    </div>
-                    <div>
-                       <p className="text-xs text-gray-400 font-bold">تاریخ انتشار</p>
-                       <p className="font-black text-gray-900">{post.date}</p>
-                    </div>
-                 </div>
-              </div>
-
-              <div className="flex items-center gap-4">
-                 <button className="flex items-center gap-2 text-gray-400 hover:text-toos-green transition-colors font-bold">
-                    <ThumbsUp size={18} /> ۲۰۴
-                 </button>
-                 <button className="flex items-center gap-2 text-gray-400 hover:text-toos-green transition-colors font-bold">
-                    <MessageSquare size={18} /> ۱۲
-                 </button>
-              </div>
-           </div>
-
-           <article className="prose prose-lg max-w-none prose-headings:font-black prose-headings:text-gray-900 prose-p:text-gray-600 prose-p:leading-relaxed prose-li:text-gray-600 font-medium">
-              {post.content}
-           </article>
-
-           <div className="mt-16 pt-10 border-t border-gray-100 flex flex-col md:flex-row items-center justify-between gap-8">
-              <div className="flex items-center gap-4">
-                 <span className="text-gray-400 font-bold">برچسب‌ها:</span>
-                 <span className="bg-gray-100 px-4 py-1.5 rounded-xl text-xs font-bold text-gray-600 hover:bg-toos-light hover:text-toos-green cursor-pointer">حبوبات</span>
-                 <span className="bg-gray-100 px-4 py-1.5 rounded-xl text-xs font-bold text-gray-600 hover:bg-toos-light hover:text-toos-green cursor-pointer">آشپزی ایرانی</span>
-              </div>
-              <button onClick={onClose} className="bg-toos-dark text-white px-10 py-4 rounded-2xl font-black hover:scale-105 transition-transform shadow-xl shadow-green-900/20">
-                متوجه شدم، ممنون
-              </button>
-           </div>
-        </div>
-      </div>
-    </div>
-  );
-}

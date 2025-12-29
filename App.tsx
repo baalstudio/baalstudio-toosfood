@@ -11,9 +11,12 @@ import { ProductsPage } from './components/ProductsPage';
 import { ContactPage } from './components/ContactPage';
 import { AboutPage } from './components/AboutPage';
 import { CertificatesPage } from './components/CertificatesPage';
+import { BlogPostPage } from './components/BlogPostPage';
+import { blogPostsData } from './components/BlogSection';
 
 function App() {
-  const [currentPage, setCurrentPage] = useState<'home' | 'blog' | 'products' | 'ai-chef' | 'contact' | 'about' | 'certificates'>('home');
+  const [currentPage, setCurrentPage] = useState<'home' | 'blog' | 'blog-post' | 'products' | 'ai-chef' | 'contact' | 'about' | 'certificates'>('home');
+  const [selectedPostId, setSelectedPostId] = useState<number | null>(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -22,11 +25,12 @@ function App() {
   const handleNavigate = (page: string, sectionId?: string) => {
     // Determine target page type safely
     const targetPage = (page === 'blog') ? 'blog' : 
+                      (page === 'blog-post' ? 'blog-post' :
                       (page === 'products' ? 'products' : 
                       (page === 'ai-chef' ? 'ai-chef' : 
                       (page === 'contact' ? 'contact' : 
                       (page === 'about' ? 'about' : 
-                      (page === 'certificates' ? 'certificates' : 'home')))));
+                      (page === 'certificates' ? 'certificates' : 'home'))))));
     
     setCurrentPage(targetPage);
 
@@ -37,6 +41,11 @@ function App() {
          if (element) element.scrollIntoView({ behavior: 'smooth' });
        }, 50);
     }
+  };
+
+  const handlePostClick = (postId: number) => {
+    setSelectedPostId(postId);
+    setCurrentPage('blog-post');
   };
 
   return (
@@ -61,7 +70,11 @@ function App() {
                </div>
             </div>
 
-            <BlogSection viewMode="preview" onViewAll={() => handleNavigate('blog')} />
+            <BlogSection 
+              viewMode="preview" 
+              onViewAll={() => handleNavigate('blog')} 
+              onPostClick={handlePostClick}
+            />
             <AiChef viewMode="preview" onFullView={() => handleNavigate('ai-chef')} />
           </>
         )}
@@ -74,7 +87,24 @@ function App() {
 
         {currentPage === 'blog' && (
           <div className="min-h-screen">
-             <BlogSection viewMode="full" />
+             <BlogSection 
+               viewMode="full" 
+               onPostClick={handlePostClick}
+             />
+          </div>
+        )}
+
+        {currentPage === 'blog-post' && selectedPostId !== null && (
+          <div className="min-h-screen">
+             {(() => {
+               const post = blogPostsData.find(p => p.id === selectedPostId);
+               return post ? (
+                 <BlogPostPage 
+                   post={post} 
+                   onBack={() => setCurrentPage('blog')} 
+                 />
+               ) : null;
+             })()}
           </div>
         )}
 
