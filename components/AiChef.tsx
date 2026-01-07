@@ -1,16 +1,71 @@
 import React, { useState } from 'react';
-import { ChefHat, Sparkles, Loader2, Utensils, Zap, BookOpen, ChevronRight, Share2, Printer } from 'lucide-react';
-// import { generateRecipe } from '../services/geminiService';
+import { ChefHat, Sparkles, Loader2, Utensils, Zap, BookOpen, ChevronRight, Share2, Printer, ShoppingCart, Star } from 'lucide-react';
+import ReactMarkdown from 'react-markdown';
+import { generateRecipe } from '../services/openrouterService';
+import { Product } from '../types';
 
 interface AiChefProps {
   viewMode?: 'preview' | 'full';
   onFullView?: () => void;
+  onProductClick?: (productId: number) => void;
+  persistedState?: {
+    recipe: string;
+    matchingProducts: Product[];
+    ingredient: string;
+  };
+  onStateChange?: (state: { recipe: string; matchingProducts: Product[]; ingredient: string }) => void;
 }
 
-export const AiChef: React.FC<AiChefProps> = ({ viewMode = 'preview', onFullView }) => {
-  const [selectedIngredient, setSelectedIngredient] = useState<string>('');
-  const [recipe, setRecipe] = useState<string>('');
+const ProductCard: React.FC<{ product: Product; onClick?: (id: number) => void }> = ({ product, onClick }) => (
+  <div 
+    onClick={() => onClick?.(product.id)}
+    className="bg-white border border-gray-100 rounded-3xl p-4 hover:shadow-xl transition-all cursor-pointer group flex flex-col h-full"
+  >
+    <div className="relative aspect-square rounded-2xl overflow-hidden mb-4 bg-gray-50">
+      <img 
+        src={product.image} 
+        alt={product.title} 
+        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+      />
+      {!product.isAvailable && (
+        <div className="absolute inset-0 bg-white/60 backdrop-blur-[2px] flex items-center justify-center">
+          <span className="bg-gray-800 text-white px-3 py-1 rounded-full text-[10px] font-black">ناموجود</span>
+        </div>
+      )}
+    </div>
+    <div className="flex-1">
+      <div className="flex items-center justify-between mb-2">
+        <span className="text-[10px] font-bold text-toos-green bg-toos-light px-2 py-0.5 rounded-full">{product.category}</span>
+        <div className="flex items-center gap-1 text-toos-gold">
+          <Star size={12} fill="currentColor" />
+          <span className="text-[10px] font-bold">{product.rating}</span>
+        </div>
+      </div>
+      <h4 className="font-black text-gray-900 text-sm mb-2 group-hover:text-toos-green transition-colors line-clamp-1">{product.title}</h4>
+      <p className="text-gray-500 text-[10px] line-clamp-2 mb-4 leading-relaxed">{product.description}</p>
+    </div>
+    <div className="flex items-center justify-between mt-auto pt-4 border-t border-gray-50">
+      <div className="flex flex-col">
+        <span className="text-xs font-black text-gray-900">{product.price.toLocaleString()} تومان</span>
+      </div>
+      <button className="p-2 bg-toos-light text-toos-green rounded-xl group-hover:bg-toos-green group-hover:text-white transition-all">
+        <ShoppingCart size={16} />
+      </button>
+    </div>
+  </div>
+);
+
+export const AiChef: React.FC<AiChefProps> = ({ 
+  viewMode = 'preview', 
+  onFullView, 
+  onProductClick,
+  persistedState,
+  onStateChange
+}) => {
+  const [selectedIngredient, setSelectedIngredient] = useState<string>(persistedState?.ingredient || '');
+  const [recipe, setRecipe] = useState<string>(persistedState?.recipe || '');
   const [loading, setLoading] = useState<boolean>(false);
+  const [matchingProducts, setMatchingProducts] = useState<Product[]>(persistedState?.matchingProducts || []);
 
   const ingredients = ['نخود', 'عدس', 'لوبیا قرمز', 'لپه', 'لوبیا چیتی', 'پسته', 'گردو'];
 
@@ -25,15 +80,47 @@ export const AiChef: React.FC<AiChefProps> = ({ viewMode = 'preview', onFullView
     
     setLoading(true);
     setRecipe('');
+    setMatchingProducts([]);
     
     try {
-      // const result = await generateRecipe(selectedIngredient);
-      // setRecipe(result);
+      let currentRecipe = '';
+      let currentProducts: Product[] = [];
+
+      const finalRecipe = await generateRecipe(
+        selectedIngredient, 
+        (text) => {
+          currentRecipe = text;
+          setRecipe(text);
+          onStateChange?.({
+            recipe: text,
+            matchingProducts: currentProducts,
+            ingredient: selectedIngredient
+          });
+        },
+        (products) => {
+          currentProducts = products;
+          setMatchingProducts(products);
+          onStateChange?.({
+            recipe: currentRecipe,
+            matchingProducts: products,
+            ingredient: selectedIngredient
+          });
+        }
+      );
     } catch (err) {
       setRecipe("متاسفانه خطایی در دریافت دستور پخت نیستم. لطفاً دوباره تلاش کنید.");
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleIngredientSelect = (item: string) => {
+    setSelectedIngredient(item);
+    onStateChange?.({
+      recipe,
+      matchingProducts,
+      ingredient: item
+    });
   };
 
   if (viewMode === 'full') {
@@ -80,7 +167,7 @@ export const AiChef: React.FC<AiChefProps> = ({ viewMode = 'preview', onFullView
                        {ingredients.map((item) => (
                           <button
                             key={item}
-                            onClick={() => setSelectedIngredient(item)}
+                            onClick={() => handleIngredientSelect(item)}
                             className={`px-8 py-4 rounded-2xl font-black text-lg transition-all flex items-center gap-3 ${
                               selectedIngredient === item
                                 ? 'bg-toos-green text-white shadow-xl shadow-green-200 scale-105'
@@ -128,9 +215,28 @@ export const AiChef: React.FC<AiChefProps> = ({ viewMode = 'preview', onFullView
                           </div>
                        </div>
                        <div className="p-8 md:p-12">
-                          <div className="prose prose-xl max-w-none text-gray-700 leading-loose whitespace-pre-wrap font-medium">
-                             {recipe}
+                          <div className="prose prose-xl max-w-none text-gray-700 leading-loose font-medium">
+                             <ReactMarkdown>{recipe}</ReactMarkdown>
                           </div>
+
+                          {matchingProducts.length > 0 && (
+                            <div className="mt-12">
+                              <div className="flex items-center gap-2 mb-6">
+                                <div className="w-1 h-6 bg-toos-green rounded-full"></div>
+                                <h3 className="font-black text-gray-900">محصولات مرتبط در فروشگاه توس فود</h3>
+                              </div>
+                              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                                {matchingProducts.map((product) => (
+                                  <ProductCard 
+                                    key={product.id} 
+                                    product={product} 
+                                    onClick={onProductClick}
+                                  />
+                                ))}
+                              </div>
+                            </div>
+                          )}
+
                           <div className="mt-12 p-6 bg-green-50 rounded-2xl border border-green-100 flex items-center gap-4">
                              <div className="w-12 h-12 bg-toos-green rounded-full flex items-center justify-center text-white shrink-0">
                                 <Zap size={24} />
@@ -213,7 +319,7 @@ export const AiChef: React.FC<AiChefProps> = ({ viewMode = 'preview', onFullView
               {ingredients.slice(0, 5).map((item) => (
                 <button
                   key={item}
-                  onClick={() => setSelectedIngredient(item)}
+                  onClick={() => handleIngredientSelect(item)}
                   className={`px-6 py-3 rounded-2xl font-black transition-all ${
                     selectedIngredient === item
                       ? 'bg-toos-gold text-white shadow-lg scale-105'
@@ -247,7 +353,27 @@ export const AiChef: React.FC<AiChefProps> = ({ viewMode = 'preview', onFullView
                 <ChefHat size={24} />
                 دستور پخت پیشنهادی:
               </h4>
-              <p className="leading-relaxed whitespace-pre-wrap font-medium">{recipe}</p>
+              <div className="prose prose-sm leading-relaxed font-medium">
+                <ReactMarkdown>{recipe}</ReactMarkdown>
+              </div>
+
+              {matchingProducts.length > 0 && (
+                <div className="mt-8">
+                  <div className="flex items-center gap-2 mb-4">
+                    <div className="w-1 h-4 bg-toos-green rounded-full"></div>
+                    <h5 className="font-black text-sm text-gray-900">محصولات پیشنهادی</h5>
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {matchingProducts.slice(0, 2).map((product) => (
+                      <ProductCard 
+                        key={product.id} 
+                        product={product} 
+                        onClick={onProductClick}
+                      />
+                    ))}
+                  </div>
+                </div>
+              )}
               
               <div className="mt-8 pt-6 border-t border-gray-100 flex justify-between items-center">
                  <button onClick={onFullView} className="text-toos-green font-black flex items-center gap-2 hover:gap-4 transition-all">
