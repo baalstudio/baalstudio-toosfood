@@ -15,15 +15,15 @@ export default defineConfig(({ mode }) => {
           output: {
             manualChunks: {
               'vendor-react': ['react', 'react-dom'],
-              'vendor-ai': ['@google/genai'],
+              'vendor-ai': ['@openrouter/sdk'],
               'vendor-icons': ['lucide-react'],
             }
           }
         }
       },
       define: {
-        'process.env.API_KEY': JSON.stringify(env.GEMINI_API_KEY),
-        'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY)
+        'process.env.API_KEY': JSON.stringify(env.OPENROUTER_API_KEY),
+        'process.env.OPENROUTER_API_KEY': JSON.stringify(env.OPENROUTER_API_KEY)
       },
       resolve: {
         alias: {

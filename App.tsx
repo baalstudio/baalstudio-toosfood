@@ -14,12 +14,17 @@ import { CertificatesPage } from './components/CertificatesPage';
 import { BlogPostPage } from './components/BlogPostPage';
 import { ProductDetailPage } from './components/ProductDetailPage';
 import { blogPostsData } from './components/BlogSection';
-import { allProducts } from './components/ProductsPage';
+import { allProducts } from './data/products';
 
 function App() {
   const [currentPage, setCurrentPage] = useState<'home' | 'blog' | 'blog-post' | 'products' | 'product-detail' | 'ai-chef' | 'contact' | 'about' | 'certificates'>('home');
   const [selectedPostId, setSelectedPostId] = useState<number | null>(null);
   const [selectedProductId, setSelectedProductId] = useState<number | null>(null);
+  
+  // Persist AI Chef state
+  const [lastRecipe, setLastRecipe] = useState<string>('');
+  const [lastMatchingProducts, setLastMatchingProducts] = useState<any[]>([]);
+  const [lastIngredient, setLastIngredient] = useState<string>('');
 
   useEffect(() => {
     // Sync state with URL on initial load and browser back/forward
@@ -137,7 +142,21 @@ function App() {
               onViewAll={() => handleNavigate('blog')} 
               onPostClick={handlePostClick}
             />
-            <AiChef viewMode="preview" onFullView={() => handleNavigate('ai-chef')} />
+            <AiChef 
+              viewMode="preview" 
+              onFullView={() => handleNavigate('ai-chef')} 
+              onProductClick={handleProductClick}
+              persistedState={{
+                recipe: lastRecipe,
+                matchingProducts: lastMatchingProducts,
+                ingredient: lastIngredient
+              }}
+              onStateChange={(state) => {
+                setLastRecipe(state.recipe);
+                setLastMatchingProducts(state.matchingProducts);
+                setLastIngredient(state.ingredient);
+              }}
+            />
           </>
         )}
 
@@ -186,7 +205,20 @@ function App() {
 
         {currentPage === 'ai-chef' && (
           <div className="min-h-screen">
-             <AiChef viewMode="full" />
+             <AiChef 
+               viewMode="full" 
+               onProductClick={handleProductClick}
+               persistedState={{
+                 recipe: lastRecipe,
+                 matchingProducts: lastMatchingProducts,
+                 ingredient: lastIngredient
+               }}
+               onStateChange={(state) => {
+                 setLastRecipe(state.recipe);
+                 setLastMatchingProducts(state.matchingProducts);
+                 setLastIngredient(state.ingredient);
+               }}
+             />
           </div>
         )}
 

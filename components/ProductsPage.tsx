@@ -6,36 +6,7 @@ import {
   CheckCircle2, AlertCircle, Trash2, ArrowLeft 
 } from 'lucide-react';
 
-export const allProducts: Product[] = [
-  { id: 1, title: 'آرد برنج توس', category: 'ادویه و خشکبار', image: '/img/product-1.png', description: 'آرد برنج با کیفیت عالی، تهیه شده از بهترین برنج‌های ایرانی، مناسب برای انواع دسر و شیرینی.', price: 45000, rating: 4.8, isAvailable: true, isNew: true },
-  { id: 2, title: 'زیره سیاه توس', category: 'ادویه و خشکبار', image: '/img/product-2.png', description: 'زیره سیاه اعلا، با عطر و طعم فوق‌العاده، پاک شده و آماده مصرف.', price: 120000, rating: 4.9, isAvailable: true },
-  { id: 3, title: 'زرشک توس', category: 'ادویه و خشکبار', image: '/img/product-3.png', description: 'زرشک درجه یک، با رنگی شفاف و طعمی عالی، دستچین شده برای سفره‌های شما.', price: 180000, rating: 4.7, isAvailable: true },
-  { id: 4, title: 'زنجبیل توس', category: 'ادویه و خشکبار', image: '/img/product-4.png', description: 'پودر زنجبیل خالص، با تندی و عطر طبیعی، مناسب برای انواع دمنوش و غذا.', price: 65000, rating: 4.6, isAvailable: true },
-  { id: 5, title: 'سماق توس', category: 'ادویه و خشکبار', image: '/img/product-5.png', description: 'پودر سماق قرمز درجه یک، با ترشی طبیعی، مناسب برای انواع کباب و غذاهای ایرانی.', price: 55000, rating: 4.5, isAvailable: true },
-  { id: 6, title: 'خلال پسته توس', category: 'ادویه و خشکبار', image: '/img/product-6.png', description: 'خلال پسته سبز و درجه یک، با کیفیت صادراتی، مناسب برای تزیین انواع غذا و دسر.', price: 350000, rating: 5.0, isAvailable: true },
-  { id: 7, title: 'خاکشیر توس', category: 'ادویه و خشکبار', image: '/img/product-7.png', description: 'خاکشیر شسته شده و تمیز، بدون خاکه، مناسب برای تهیه انواع شربت‌های سنتی.', price: 85000, rating: 4.8, isAvailable: true },
-  { id: 8, title: 'کشمش پلویی توس', category: 'ادویه و خشکبار', image: '/img/product-8.png', description: 'کشمش پلویی آفتابی، پاک شده و بدون دم، با شیرینی طبیعی و ماندگاری بالا.', price: 140000, rating: 4.7, isAvailable: true },
-  { id: 9, title: 'پودر سوخاری توس', category: 'پودر سوخاری', image: '/img/product-9.png', description: 'پودر سوخاری با دانه‌بندی استاندارد، برای ترد شدن انواع شنیسل و مرغ سوخاری.', price: 42000, rating: 4.4, isAvailable: true },
-  { id: 10, title: 'پودر کتلت توس', category: 'پودر سوخاری', image: '/img/product-10.png', description: 'ترکیب کامل آرد و ادویه‌جات مخصوص برای تهیه یک کتلت ترد و خوشمزه.', price: 38000, rating: 4.6, isAvailable: true },
-  { id: 11, title: 'پودر سوخاری اسپایسی توس', category: 'پودر سوخاری', image: '/img/product-11.png', description: 'پودر سوخاری با طعم تند و فلفلی، مناسب برای علاقه‌مندان به غذاهای اسپایسی.', price: 45000, rating: 4.7, isAvailable: true },
-  { id: 12, title: 'آرد سوخاری توس', category: 'پودر سوخاری', image: '/img/product-12.png', description: 'آرد سوخاری با کیفیت عالی، مناسب برای پوشش‌دهی انواع غذاهای سرخ‌کردنی.', price: 35000, rating: 4.3, isAvailable: true },
-  { id: 13, title: 'لیمو عمانی ده کیلویی توس', category: 'حبوبات', image: '/img/product-13.png', description: 'لیمو عمانی درجه یک در بسته‌بندی اقتصادی ده کیلویی، مناسب برای رستوران‌ها و مراکز تهیه غذا.', price: 950000, rating: 4.8, isAvailable: true },
-  { id: 14, title: 'سویا ده کیلویی توس', category: 'حبوبات', image: '/img/product-14.png', description: 'پروتئین سویا با کیفیت عالی در بسته‌بندی ده کیلویی، پاک شده و یکدست.', price: 380000, rating: 4.5, isAvailable: true },
-  { id: 15, title: 'جوپرک ده کیلویی توس', category: 'حبوبات', image: '/img/product-15.png', description: 'جو پرک تازه و با کیفیت در بسته‌بندی ده کیلویی، مناسب برای انواع سوپ و آش.', price: 280000, rating: 4.7, isAvailable: true },
-  { id: 16, title: 'لوبیاقرمز ده کیلویی توس', category: 'حبوبات', image: '/img/product-16.png', description: 'لوبیا قرمز درجه یک و یکدست در بسته‌بندی ده کیلویی، مناسب برای مصارف عمده.', price: 1100000, rating: 4.9, isAvailable: true },
-  { id: 17, title: 'جو پوست کنده ده کیلویی توس', category: 'حبوبات', image: '/img/product-17.png', description: 'جو پوست کنده با کیفیت عالی، پاک شده و آماده طبخ در بسته‌بندی ده کیلویی.', price: 260000, rating: 4.6, isAvailable: true },
-  { id: 18, title: 'بلغور گندم ده کیلویی توس', category: 'حبوبات', image: '/img/product-18.png', description: 'بلغور گندم تازه و با کیفیت در بسته‌بندی اقتصادی ده کیلویی.', price: 240000, rating: 4.4, isAvailable: true },
-  { id: 19, title: 'بلغور جو ده کیلویی توس', category: 'حبوبات', image: '/img/product-19.png', description: 'بلغور جو با کیفیت عالی، مناسب برای انواع آش و غذاهای سنتی در بسته‌بندی ده کیلویی.', price: 230000, rating: 4.5, isAvailable: true },
-  { id: 20, title: 'نشاسته ده کیلویی توس', category: 'حبوبات', image: '/img/product-20.png', description: 'نشاسته گندم با کیفیت عالی، سفید و شفاف در بسته‌بندی ده کیلویی.', price: 320000, rating: 4.7, isAvailable: true },
-  { id: 21, title: 'سبزی قرمه سبزی توس', category: 'سبزیجات', image: '/img/product-21.png', description: 'ترکیب سبزیجات قرمه سبزی، شسته شده و خرد شده با رعایت اصول بهداشتی.', price: 58000, rating: 4.9, isAvailable: true },
-  { id: 22, title: 'سبزی پلو توس', category: 'سبزیجات', image: '/img/product-22.png', description: 'سبزی پلویی معطر و تازه، آماده برای طبخ یک پلوی ایرانی اصیل.', price: 58000, rating: 4.8, isAvailable: true },
-  { id: 23, title: 'سبزی آش توس', category: 'سبزیجات', image: '/img/product-23.png', description: 'سبزی مخصوص آش، با ترکیب استاندارد و کیفیت عالی.', price: 55000, rating: 4.7, isAvailable: true },
-  { id: 24, title: 'سبزی کوکو توس', category: 'سبزیجات', image: '/img/product-24.png', description: 'سبزی کوکو تازه و خوش عطر، آماده برای تهیه یک کوکوی ترد و خوشمزه.', price: 58000, rating: 4.8, isAvailable: true },
-  { id: 25, title: 'شوید خشک توس', category: 'سبزیجات', image: '/img/product-25.png', description: 'شوید خشک با عطر ماندگار و رنگ سبز طبیعی، بدون هیچ‌گونه ناخالصی.', price: 45000, rating: 4.9, isAvailable: true },
-  { id: 26, title: 'نعناع خشک توس', category: 'سبزیجات', image: '/img/product-26.png', description: 'نعناع خشک معطر، تهیه شده از بهترین برگ‌های نعناع، مناسب برای دوغ و ماست.', price: 42000, rating: 4.8, isAvailable: true },
-  { id: 27, title: 'جعفری خشک توس', category: 'سبزیجات', image: '/img/product-27.png', description: 'جعفری خشک با کیفیت بالا، مناسب برای انواع سوپ و خوراک.', price: 40000, rating: 4.6, isAvailable: true },
-  { id: 28, title: 'مرزه توس', category: 'سبزیجات', image: '/img/product-28.png', description: 'مرزه خشک معطر و با کیفیت، پاک شده و آماده مصرف.', price: 40000, rating: 4.7, isAvailable: true },
-];
+import { allProducts } from '../data/products';
 
 interface ProductsPageProps {
   onProductClick?: (productId: number) => void;

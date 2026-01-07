@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { MessageCircle, X, Send, Loader2, Minus, User, Bot } from 'lucide-react';
-// import { createSupportChat } from '../services/geminiService';
-import { Chat } from "@google/genai";
+import ReactMarkdown from 'react-markdown';
+import { createSupportChat, OpenRouterChat } from '../services/openrouterService';
 
 interface Message {
   id: number;
@@ -16,12 +16,12 @@ export const SupportChat: React.FC = () => {
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const chatInstance = useRef<Chat | null>(null);
+  const chatInstance = useRef<OpenRouterChat | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     // Initialize chat session
-    // chatInstance.current = createSupportChat();
+    chatInstance.current = createSupportChat();
   }, []);
 
   useEffect(() => {
@@ -118,13 +118,17 @@ export const SupportChat: React.FC = () => {
               </div>
               
               <div
-                className={`max-w-[80%] p-3 text-sm leading-relaxed whitespace-pre-wrap ${
+                className={`max-w-[80%] p-3 text-sm leading-relaxed ${
                   msg.sender === 'user'
-                    ? 'bg-toos-green text-white rounded-2xl rounded-br-none'
-                    : 'bg-white text-gray-800 border border-gray-100 rounded-2xl rounded-bl-none shadow-sm'
+                    ? 'bg-toos-green text-white rounded-2xl rounded-br-none whitespace-pre-wrap'
+                    : 'bg-white text-gray-800 border border-gray-100 rounded-2xl rounded-bl-none shadow-sm prose prose-sm'
                 }`}
               >
-                {msg.text}
+                {msg.sender === 'user' ? (
+                  msg.text
+                ) : (
+                  <ReactMarkdown>{msg.text}</ReactMarkdown>
+                )}
               </div>
             </div>
           ))}
